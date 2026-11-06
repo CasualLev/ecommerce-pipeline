@@ -1,0 +1,15 @@
+PostgreSQL Connection Details
+=============================
+Host:     localhost
+Port:     5432
+Database: ecommerce
+User:     ecommerce_user
+Password: ecommerce_local_pw
+Table:    events
+
+JDBC URL: jdbc:postgresql://localhost:5432/ecommerce
+
+Note: these credentials belong to a dedicated, local-only database user
+created by postgres_setup.sql. The user can only access the ecommerce
+database and is not reachable from outside this machine. The pipeline
+itself reads credentials from a git-ignored .env file, not from this file.
