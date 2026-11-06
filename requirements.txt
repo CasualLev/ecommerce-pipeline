@@ -1,0 +1,4 @@
+pyspark==3.5.1
+faker
+psycopg2-binary
+python-dotenv
