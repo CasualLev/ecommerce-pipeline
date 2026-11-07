@@ -14,11 +14,9 @@ CREATE ROLE ecommerce_user WITH LOGIN PASSWORD 'ecommerce_local_pw';
 -- Database owned by that user
 CREATE DATABASE ecommerce OWNER ecommerce_user;
 
--- Switch into the new database, acting as the project user
 \c ecommerce
 SET ROLE ecommerce_user;
 
--- Events table
 CREATE TABLE events (
     event_id         VARCHAR(36)    PRIMARY KEY,
     event_type       VARCHAR(20)    NOT NULL
@@ -39,6 +37,11 @@ CREATE TABLE events (
 -- Indexes for common queries (by time, by event type)
 CREATE INDEX idx_events_timestamp ON events (event_timestamp);
 CREATE INDEX idx_events_type      ON events (event_type);
+
+-- Staging table: Spark writes each micro-batch here, then a single
+-- INSERT ... ON CONFLICT copies new rows into events. UNLOGGED skips
+-- PostgreSQL's crash-recovery log, which is faster and fine for scratch data.
+CREATE UNLOGGED TABLE events_staging (LIKE events INCLUDING DEFAULTS);
 
 -- Show the result
 \d events

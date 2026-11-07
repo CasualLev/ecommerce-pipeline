@@ -7,3 +7,5 @@ checkpoints/
 spark-warehouse/
 metastore_db/
 derby.log
+logs/
+data/rejected/
